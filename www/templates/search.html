@@ -1,0 +1,23 @@
+<ion-view view-title="Search">
+  <ion-content>
+    <h1>Search</h1>
+    <button
+      class="button button-positive"
+      ng-class="{'ion-play': paused, 'ion-pause': !paused}"
+      ng-click="togglePlay()"></button>
+    <audio src="/audio/audio.mp3" id="audio"></audio>
+    <div class="item range">
+      <i class="icon ion-minus" ng-click="updatePlaybackRate(-0.1)"></i>
+      <input
+        type="range"
+        min="0.5"
+        max="3.0"
+        step="0.1"
+        ng-model="data.playbackRate"
+        ng-change="updatePlaybackRate()"
+        ng-model-options="{debounce: 250}"
+      >{{playbackRate | number:1}}
+      <i class="icon ion-plus" ng-click="updatePlaybackRate(0.1)"></i>
+    </div>
+  </ion-content>
+</ion-view>
