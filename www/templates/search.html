@@ -1,11 +1,7 @@
-<ion-view view-title="Search">
+<ion-view view-title="{{playlistId}}" cache-view="false">
   <ion-content>
-    <h1>Search</h1>
-    <button
-      class="button button-positive"
-      ng-class="{'ion-play': paused, 'ion-pause': !paused}"
-      ng-click="togglePlay()"></button>
-    <audio src="/audio/audio.mp3" id="audio"></audio>
+    <h1>{{playlistId}}</h1>
+    <audio ng-src="{{trustedUrl}}" controls="true" id="audio"></audio>
     <div class="item range">
       <i class="icon ion-minus" ng-click="updatePlaybackRate(-0.1)"></i>
       <input
@@ -16,8 +12,12 @@
         ng-model="data.playbackRate"
         ng-change="updatePlaybackRate()"
         ng-model-options="{debounce: 250}"
-      >{{playbackRate | number:1}}
+      >{{data.playbackRate | number:1}}
       <i class="icon ion-plus" ng-click="updatePlaybackRate(0.1)"></i>
+    </div>
+    <div class="button-bar bar-positive">
+      <button class="button ion-reply" ng-click="backward()"></button>
+      <button class="button ion-forward" ng-click="foreward()"></button>
     </div>
   </ion-content>
 </ion-view>

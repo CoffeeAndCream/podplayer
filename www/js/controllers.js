@@ -43,24 +43,27 @@ angular.module('starter.controllers', [])
 
 .controller('PlaylistsCtrl', function($scope) {
   $scope.playlists = [
-    { title: 'Reggae', id: 1 },
-    { title: 'Chill', id: 2 },
-    { title: 'Dubstep', id: 3 },
-    { title: 'Indie', id: 4 },
-    { title: 'Rap', id: 5 },
-    { title: 'Cowbell', id: 6 }
+    { title: 'Chad', id: "chad" },
+    { title: 'Kaleigh', id: "kaleigh" },
+    { title: 'Lee', id: "lee" },
+    { title: 'Miya', id: "miya" }
   ];
 })
 
-.controller('PlaylistCtrl', function($scope, $stateParams) {
-})
-
-.controller('SearchCtrl', function($scope, $stateParams) {
+.controller('SearchCtrl', function($scope, $stateParams, $sce) {
   var audio = document.getElementById("audio");
   audio.addEventListener("ended", function () {
     $scope.paused = true;
     audio.currentTime = 0;
   });
+  $scope.playlistId = $stateParams.playlistId;
+  $scope.trustedUrl = $sce.trustAsResourceUrl("/audio/" + $stateParams.playlistId + ".m4a");
+  $scope.backward = function () {
+    audio.currentTime -= 30;
+  };
+  $scope.foreward = function () {
+    audio.currentTime += 30;
+  };
   $scope.togglePlay = function () {
     if ($scope.paused) {
       audio.play();
