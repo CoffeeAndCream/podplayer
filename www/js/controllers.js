@@ -51,7 +51,26 @@ angular.module('starter.controllers', [])
 })
 
 .controller('SearchCtrl', function($scope, $stateParams, $sce) {
-  var audio = document.getElementById("audio");
+  var audio = document.getElementById("audio"),
+    keyHandler = function (e) {
+      switch (e.keyCode) {
+        case 32: /// space
+          $scope.toggle();
+          break;
+        case 37:
+          $scope.backward();
+          break;
+        case 39:
+          $scope.foreward();
+          break;
+        case 187:
+          $scope.updatePlaybackRate(0.1);
+          break;
+        case 189:
+          $scope.updatePlaybackRate(-0.1);
+          break;
+      }
+    };
   audio.addEventListener("ended", function () {
     $scope.paused = true;
     audio.currentTime = 0;
@@ -64,13 +83,12 @@ angular.module('starter.controllers', [])
   $scope.foreward = function () {
     audio.currentTime += 30;
   };
-  $scope.togglePlay = function () {
-    if ($scope.paused) {
+  $scope.toggle = function () {
+    if (audio.paused) {
       audio.play();
     } else {
       audio.pause();
     }
-    $scope.paused = !$scope.paused;
   };
   $scope.updatePlaybackRate = function (val) {
     $scope.data.playbackRate = parseFloat($scope.data.playbackRate);
@@ -78,14 +96,19 @@ angular.module('starter.controllers', [])
       $scope.data.playbackRate = $scope.data.playbackRate + val;
     }
     if ($scope.data.playbackRate < 0.5) {
-      $scope.data.playbackRate = 0.1
+      $scope.data.playbackRate = 0.5
     } else if ($scope.data.playbackRate > 3) {
       $scope.data.playbackRate = 3;
     }
     audio.playbackRate = $scope.data.playbackRate;
+    $scope.$digest();
   };
   $scope.data = {
     playbackRate: 1.0
   };
   $scope.paused = true;
+  document.addEventListener("keydown", keyHandler);
+  $scope.$on("$destroy", function () {
+    document.removeEventListener("keydown", keyHandler);
+  });
 });
