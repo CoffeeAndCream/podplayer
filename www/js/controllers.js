@@ -44,9 +44,10 @@ angular.module('starter.controllers', [])
 .controller('PlaylistsCtrl', function($scope) {
   $scope.playlists = [
     { title: 'Chad', id: "chad" },
+    { title: 'Miya', id: "miya" },
     { title: 'Kaleigh', id: "kaleigh" },
     { title: 'Lee', id: "lee" },
-    { title: 'Miya', id: "miya" }
+    { title: "Nancy", id: "nancy"}
   ];
 })
 
@@ -72,7 +73,6 @@ angular.module('starter.controllers', [])
       }
     };
   audio.addEventListener("ended", function () {
-    $scope.paused = true;
     audio.currentTime = 0;
   });
   $scope.playlistId = $stateParams.playlistId;
@@ -101,12 +101,11 @@ angular.module('starter.controllers', [])
       $scope.data.playbackRate = 3;
     }
     audio.playbackRate = $scope.data.playbackRate;
-    $scope.$digest();
+    $scope.$digest(); /// update slider
   };
   $scope.data = {
     playbackRate: 1.0
   };
-  $scope.paused = true;
   document.addEventListener("keydown", keyHandler);
   $scope.$on("$destroy", function () {
     document.removeEventListener("keydown", keyHandler);
